@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-def solution1(n, k, m, arr):
+def solve_771_v1(n, k, m, arr):
     rem_groups = defaultdict(list)
     for x in arr:
         rem_groups[x % m].append(x)
@@ -12,14 +12,11 @@ def solution1(n, k, m, arr):
             return
     print("No")
 
-# Example test
-solution1(3, 2, 3, [1, 8, 4])  # Output: Yes 1 4
-solution1(3, 3, 3, [1, 8, 4])  # Output: No
 
 
 from collections import Counter
 
-def solution2(n, k, m, arr):
+def solve_771_v2(n, k, m, arr):
     cnt = Counter(arr)
     rem_groups = defaultdict(list)
     for num in cnt:
@@ -32,12 +29,10 @@ def solution2(n, k, m, arr):
             return
     print("No")
 
-# Test
-solution2(4, 3, 5, [2, 7, 7, 7])  # Output: Yes 2 7 7
-solution2(3, 3, 3, [1, 8, 4])      # Output: No
 
 
-def solution3(n, k, m, arr):
+
+def solve_771_v3(n, k, m, arr):
     remainders = [[] for _ in range(m)]
     for x in arr:
         remainders[x % m].append(x)
@@ -49,7 +44,4 @@ def solution3(n, k, m, arr):
             return
     print("No")
 
-# Test
-solution3(3, 2, 3, [1, 8, 4])  # Yes 1 4
-solution3(3, 3, 3, [1, 8, 4])  # No
-solution3(4, 3, 5, [2, 7, 7, 7])  # Yes 2 7 7
+

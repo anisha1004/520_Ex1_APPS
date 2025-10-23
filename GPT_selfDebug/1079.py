@@ -1,4 +1,4 @@
-def min_beautiful_numbers_1(s):
+def solve_1079_v1(s):
     s = list(map(int, s[::-1]))  # reverse for LSB -> MSB
     s.append(0)  # extra space for carry
     n = len(s)
@@ -12,14 +12,11 @@ def min_beautiful_numbers_1(s):
             count += 1
     return count
 
-# Example test
-s = "1101101"
-print(min_beautiful_numbers_1(s))  # Output: 4
 
 
 from functools import lru_cache
 
-def min_beautiful_numbers_2(s):
+def solve_1079_v2(s):
     n = int(s, 2)
 
     @lru_cache(None)
@@ -36,12 +33,10 @@ def min_beautiful_numbers_2(s):
     
     return solve(n)
 
-# Test
-s = "1101101"
 print(min_beautiful_numbers_2(s))  # Output: 4
 
 
-def min_beautiful_numbers_3(s):
+def solve_1079_v3(s):
     s = list(map(int, s[::-1]))
     s.append(0)  # for potential carry
     count = 0
@@ -55,6 +50,3 @@ def min_beautiful_numbers_3(s):
         i += 1
     return count
 
-# Test
-s = "1101101"
-print(min_beautiful_numbers_3(s))  # Output: 4
