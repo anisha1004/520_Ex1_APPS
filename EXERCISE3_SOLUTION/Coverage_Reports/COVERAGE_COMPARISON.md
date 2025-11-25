@@ -1,10 +1,5 @@
 # Exercise 3 - Coverage Comparison Report
 
-## Overview
-
-This report compares the coverage achieved by **specification-guided test generation** (Exercise 3) with the **iterative LLM-guided test generation** (Exercise 2).
-
----
 
 ## Problem 203: Senate Voting Simulation
 
@@ -23,7 +18,6 @@ This report compares the coverage achieved by **specification-guided test genera
 
 ### Analysis
 
-**Why No Coverage Increase?**
 
 The specification-guided tests achieved **exactly the same coverage** as the Exercise 2 baseline (72%). This is because:
 
@@ -110,16 +104,6 @@ The 28 spec-guided tests improved coverage slightly by adding fundamental test c
 
 ## Overall Comparison
 
-### Test Generation Approaches
-
-| Aspect | Exercise 2 (Iterative) | Exercise 3 (Spec-Guided) |
-|--------|------------------------|--------------------------|
-| **Philosophy** | Bottom-up, coverage-driven | Top-down, property-driven |
-| **Process** | Run tests → check coverage → add targeted tests → repeat | Write specs → generate tests from specs |
-| **Strength** | Achieves high coverage (96-97%) | Validates correctness properties |
-| **Weakness** | Requires multiple iterations | May miss low-level code paths |
-| **Test Quality** | Targets specific uncovered lines | Tests logical properties |
-| **Efficiency** | More tests needed (31-108) | Fewer tests (28-30) |
 
 ### Coverage Achievement
 
@@ -147,94 +131,4 @@ The 28 spec-guided tests improved coverage slightly by adding fundamental test c
    - Use specifications to define correctness properties
    - Use coverage-guided iteration to ensure completeness
    - Best of both worlds: correct AND comprehensive
-
----
-
-## Detailed Coverage by Specification
-
-### Problem 203 - Coverage by Spec
-
-| Specification | Lines Covered | New Coverage? |
-|--------------|---------------|---------------|
-| Spec 1: Valid output | Lines 433 | ✅ (already covered) |
-| Spec 2: Single senator | Lines 410-433 (all) | ✅ (already covered) |
-| Spec 3: Homogeneous party | Lines 418-422, 424-433 | ✅ (already covered) |
-| Spec 4: Two-senator cases | Lines 418-433 | ✅ (already covered) |
-| Spec 5: Majority + first | Lines 418-433 | ✅ (already covered) |
-| **Missing coverage** | Lines 429, 431 (wraparound) | ❌ Not captured by specs |
-
-### Problem 3177 - Coverage by Spec
-
-| Specification | Lines Covered | New Coverage? |
-|--------------|---------------|---------------|
-| Spec 1: Format validation | Line 528 (return) | ✅ (already covered) |
-| Spec 2: Non-negative | Lines 507-539 (validation) | ✅ (already covered) |
-| Spec 3: Already sorted | Lines 527-528 (early return) | ✅ **NEW** (3% gain) |
-| Spec 4: Bounds | Lines 521-537 | ✅ (already covered) |
-| Spec 5: Valid permutation | Lines 510-517 (input parsing) | ✅ (already covered) |
-| **Missing coverage** | Lines 535-536 (visited set), 539 (empty return) | ❌ Not captured by specs |
-
----
-
-## Conclusions
-
-### When Spec-Guided Testing Works Well
-1. ✅ Validating correctness properties
-2. ✅ Testing logical relationships
-3. ✅ Documenting intended behavior
-4. ✅ Catching specification violations
-5. ✅ When baseline has minimal tests (Problem 3177: +3%)
-
-### When Spec-Guided Testing Falls Short
-1. ❌ Achieving high code coverage
-2. ❌ Finding low-level edge cases
-3. ❌ Exploring complex state spaces
-4. ❌ When baseline already has good tests (Problem 203: +0%)
-5. ❌ Testing implementation-specific logic
-
-### Recommendation
-
-**Use a hybrid approach:**
-1. Start with formal specifications (correctness)
-2. Generate initial tests from specifications
-3. Measure coverage
-4. Use coverage-guided iteration to fill gaps
-5. Validate that new tests still satisfy specifications
-
-This combines the **correctness guarantees** of specification-based testing with the **completeness** of coverage-driven testing.
-
----
-
-## Appendix: Uncovered Lines
-
-### Problem 203 - Uncovered Lines (28%)
-
-```python
-# Line 429: d_queue.append(d_idx + n)  # Wraparound for D
-# Line 431: r_queue.append(r_idx + n)  # Wraparound for R
-```
-
-**Why uncovered by specs?**
-- Specifications don't capture the specific index arithmetic (d_idx + n)
-- This is an implementation detail, not a logical property
-- Would need tests that trigger multiple rounds of voting
-
-### Problem 3177 - Uncovered Lines (27%)
-
-```python
-# Lines 535-536: if new_state not in seen: seen.add(new_state)
-# Line 539: return ""  # Empty return for unreachable
-```
-
-**Why uncovered by specs?**
-- Visited set collision is a BFS implementation detail
-- Empty return is for impossible cases (input guarantees solution exists)
-- Specifications focus on valid inputs, not internal state management
-
----
-
-**Report Generated**: Exercise 3  
-**Date**: November 2025  
-**Tool**: Specification-Guided Test Generation with Coverage Analysis
-
 
